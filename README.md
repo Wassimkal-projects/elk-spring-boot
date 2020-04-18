@@ -73,7 +73,7 @@ One arrive maintenant à la partie Spring boot, on va créer un projet spring bo
 ### Logstash
 1. Télécharger la dernière version de logstash [Logstash downloads](https://www.elastic.co/downloads/logstash)
 2. Configurer le pipeline de logstash:  
-![Image](https://github.com/Wassimkal-projects/elk-spring-boot/tree/master/src/main/resources/logstash-pipeline.jpg) 
+![Image](https://github.com/Wassimkal-projects/elk-spring-boot/blob/master/src/main/resources/readmeimages/logstash-pipeline.jpg) 
     * Créer un fichier de configuration nommé logstash.conf (sous le dossier /config par exemple)
    
     ```
