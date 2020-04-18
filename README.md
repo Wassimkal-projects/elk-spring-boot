@@ -48,7 +48,7 @@ One arrive maintenant à la partie Spring boot, on va créer un projet spring bo
     ```
     logging.file.name= D:/Wassim/wkprojects/elk-spring-boot/log-files/spring-boot-elk.log
     ```
-4. Définir un contoleur qui expose une API reste. Les appels à ces API écriront dans le fichier log qu'on vient de définir
+4. Définir un contoleur qui expose une API rest. Les appels à cette API écriront dans le fichier log qu'on vient de définir
     ```java
     @RestController
     class ELKController {
