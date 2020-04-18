@@ -1,49 +1,49 @@
 package com.wkprojects.elkspringboot.web.rest;
 
+import com.wkprojects.elkspringboot.service.ELKService;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 import org.apache.logging.log4j.Logger;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.time.LocalDate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ELKController {
-
     private static final Logger logger = LogManager.getLogger(ELKController.class);
 
-    private final RestTemplate restTemplate;
+    private final ELKService elkService;
 
-    public ELKController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-    @GetMapping("/elk")
-    public String helloWorld() {
-        String response = "Welcome to JavaInUse" + LocalDate.now();
-        logger.info(response);
-        return response;
+    public ELKController(ELKService elkService) {
+        this.elkService = elkService;
     }
 
     @GetMapping("/exception")
-    public String exception() {
-        String response;
-        try {
-            throw new Exception("Exception has occured....");
-        } catch (Exception e) {
+    public ResponseEntity<String> throwException() {
+        String reponse;
+        try{
+            throw new Exception("Une exception est levée ..");
+        } catch (Exception e){
+            logger.error("Une exception est levée ..");
             e.printStackTrace();
-            logger.error(e);
-
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String stackTrace = sw.toString();
-            logger.error("Exception - " + stackTrace);
-            response = stackTrace;
+            reponse = e.getMessage();
         }
+        return new ResponseEntity<>(reponse, HttpStatus.OK);
+    }
 
-        return response;
+    @GetMapping("/date")
+    public ResponseEntity<String> getCurrentDate() {
+        return new ResponseEntity<>(elkService.getCurrentDate(), HttpStatus.OK);
+    }
+
+/*    @GetMapping("/exception")
+    public ResponseEntity<String> throwException() {
+        return new ResponseEntity<>(elkService.throwException(), HttpStatus.OK);
+    }*/
+
+    @GetMapping("/divide-ten-by/{number}")
+    public ResponseEntity<Integer> divideTenBy(@PathVariable Integer number) {
+        return new ResponseEntity<>(elkService.divideTenBy(number), HttpStatus.OK);
     }
 }
